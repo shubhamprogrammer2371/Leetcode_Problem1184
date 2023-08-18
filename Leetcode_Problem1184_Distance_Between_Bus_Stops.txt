@@ -1,0 +1,65 @@
+int distanceBetweenBusStops(int* distance, int distanceSize, int start, int destination){
+    int dist1 = distance[start],dist2 = 0;
+    for( int i = ((start + 1)%distanceSize)  ; i != destination ;  i = ((i+1)%distanceSize))
+        dist1 += distance[i];
+    for( int i = destination ; i != start ; i = ((i+1)%distanceSize))
+        dist2 += distance[i];
+    return (dist1 >= dist2) ? dist2 : dist1;
+}
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+int distanceBetweenBusStops(int* distance, int distanceSize, int start, int destination){
+    int dist1 = distance[start],dist2 = 0,counter = 0;
+    for(int i = ((start + 1)%distanceSize) ; i != start ; i = ((i+1)%distanceSize))
+    {
+        if((i != destination) && (!(counter)))
+            dist1 += distance[i];
+        else
+        {
+            counter = 1;
+            dist2 += distance[i];
+        }
+    }
+    return (dist1 >= dist2) ? dist2 : dist1;
+}
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+int distanceBetweenBusStops(int* distance, int distanceSize, int start, int destination){
+        //base case: if it starts & ends at the same point-> return 0
+    if(start==destination)
+        return 0;
+    int path1=0, path2=0,i=0;
+    
+    //step 1: make the pointer starts from the start point
+    i=start;
+    //loop over the whole array elements until the final point
+    while(i!=destination){
+        //add the distances to the way 1 & add the pointer by a step forward
+        path1+=distance[i];
+        i=(i+1)%distanceSize;
+    }
+    
+    //step 2: make the pointer starts from the end point
+    i=destination;
+    //loop over the whole array elements until the start point
+    while(i!=start){
+        //add the distances to the way 2 & add the pointer by a step back
+        path2+=distance[i];
+        i=(i+1)%distanceSize;
+    }
+    
+    //return the minimum number of steps between the two paths
+    return path1<path2 ? path1 : path2;
+
+}
